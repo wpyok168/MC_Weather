@@ -27,7 +27,15 @@ namespace MC_Weather
         }
         private string GetWeatherprivateM(string city)
         {
-            string url = $"http://wthrcdn.etouch.cn/weather_mini?city={city}";
+            //http://toy1.weather.com.cn/search?cityname=思明&callback=success_jsonpCallback&_=1664936165826
+            //http://www.weather.com.cn/weather/101230203.shtml
+            /*
+             * http://www.weather.com.cn/data/sk/101010100.html
+               http://www.weather.com.cn/data/cityinfo/101010100.html
+             */
+            //string url = $"http://wthrcdn.etouch.cn/weather_mini?city={city}";//中华万年历服务器已关停
+            // https://zhwnlapi.etouch.cn/Ecalender/weather_mini?city=%E5%8E%A6%E9%97%A8&callback=flightHandler&callback=flightHandler&_=1664939521904 
+            string url = $"https://zhwnlapi.etouch.cn/Ecalender/weather_mini?city={city}";//中华万年历新服务器
             HttpWebRequest hwr = (HttpWebRequest)HttpWebRequest.Create(url);
             hwr.Method = "get";
             hwr.ContentType = "application/x-www-form-urlencoded";
@@ -91,6 +99,11 @@ namespace MC_Weather
                         sb.Append(wdl + "-" + wdh + "\r\n");
                         wdh = string.Empty;
                         wdl = string.Empty;
+                    }
+                    if (item.Key.Equals("fengli"))
+                    {
+                        //fengli=<![CDATA[4级]]>
+                        sb.Append($"风力：{item.Value.ToString().Replace("<![CDATA[", "").Replace("]]>", "")}\r\n");
                     }
                     if (item.Key.Equals("fengxiang"))
                     {
