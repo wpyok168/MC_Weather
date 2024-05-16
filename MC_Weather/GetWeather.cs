@@ -85,6 +85,8 @@ namespace MC_Weather
                 string wdh = string.Empty; string wdl = string.Empty; //温度
                 string daywthr = string.Empty; string nightwthr = string.Empty;  //天气
                 string sunrise = string.Empty; string sunset = string.Empty;  //日出 日落
+                string wd = string.Empty; string wp = string.Empty;  //风向 风力
+                string wdp= string.Empty;
 
                 foreach (KeyValuePair<string, object> item in weater2)
                 {
@@ -122,17 +124,27 @@ namespace MC_Weather
                         sb.Append("天气：" + daywthr + "转" + nightwthr + "\r\n");
                         daywthr = string.Empty;
                         nightwthr = string.Empty;
+                        sb.Append(wdp);
                     }
                     if (item.Key.Equals("wd"))
                     {
-                        sb.Append($"风向：{item.Value}\r\n");
+                        wd = $"风向：{item.Value}\r\n";
+                        //sb.Append($"风向：{item.Value}\r\n");
                     }
                     if (item.Key.Equals("wp"))
                     {
                         //fengli=<![CDATA[4级]]>
-                        sb.Append($"风力：{item.Value.ToString().Replace("<![CDATA[", "").Replace("]]>", "")}\r\n");
+                        //sb.Append($"风力：{item.Value.ToString().Replace("<![CDATA[", "").Replace("]]>", "")}\r\n");
+                        wp = $"风力：{item.Value.ToString().Replace("<![CDATA[", "").Replace("]]>", "")}\r\n";
                     }
-                    
+                    if (!string.IsNullOrEmpty(wd) && !string.IsNullOrEmpty(wp))
+                    {
+                        wdp = wd + wp;
+                        //sb.Append(wd+wp);
+                        wd = string.Empty;
+                        wp = string.Empty;
+                    }
+
                     if (item.Key.Equals("sunrise"))
                     {
                         sunrise = $"{item.Value}";
