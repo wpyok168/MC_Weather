@@ -35,7 +35,8 @@ namespace MC_Weather
              */
             //string url = $"http://wthrcdn.etouch.cn/weather_mini?city={city}";//中华万年历服务器已关停
             // https://zhwnlapi.etouch.cn/Ecalender/weather_mini?city=%E5%8E%A6%E9%97%A8&callback=flightHandler&callback=flightHandler&_=1664939521904 
-            string url = $"https://zhwnlapi.etouch.cn/Ecalender/weather_mini?city={city}";//中华万年历新服务器
+            //string url = $"https://zhwnlapi.etouch.cn/Ecalender/weather_mini?city={city}";//中华万年历服务器已关停
+            string url = $"https://v2-zhwnlapi.etouch.cn/Ecalender/api/v2/weather?city={city}";//中华万年历新服务器
             HttpWebRequest hwr = (HttpWebRequest)HttpWebRequest.Create(url);
             hwr.Method = "get";
             hwr.ContentType = "application/x-www-form-urlencoded";
