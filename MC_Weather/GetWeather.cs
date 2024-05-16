@@ -6,6 +6,7 @@ using System.IO.Compression;
 using System.Net;
 using System.Text;
 using System.Web.Script.Serialization;
+using System.Windows.Forms;
 
 namespace MC_Weather
 {
@@ -67,24 +68,28 @@ namespace MC_Weather
         private string JsonParst(string jsonstr)
         {
             Dictionary<string, object> weater = new JavaScriptSerializer().Deserialize<Dictionary<string, object>>(jsonstr);
-            Dictionary<string, object> weater1 = (Dictionary<string, object>)weater["data"];
-            string city = (string)weater1["city"];
-            ArrayList arrayList = (ArrayList)weater1["forecast"];
+            //Dictionary<string, object> weeklyDto = (Dictionary<string, object>)weater["weeklyDto"];
+            Dictionary<string, object> meta = (Dictionary<string, object>)weater["meta"];
+            string city = meta["city"].ToString();
+            ArrayList arrayList = (ArrayList)weater["forecast"];//forecast 27天   weekly 7天
             //Dictionary<string, object> weater2 = (Dictionary<string, object>)arrayList[0];
             StringBuilder sb = new StringBuilder();
             sb.Append($"城市：{city}\r\n");
             sb.Append("----------------\r\n");
-            string mouth = DateTime.Now.ToString("MM");
+            //string mouth = DateTime.Now.ToString("MM");
             for (int i = 0; i < arrayList.Count; i++)
             {
                 Dictionary<string, object> weater2 = (Dictionary<string, object>)arrayList[i];
-                string wdh = string.Empty;
-                string wdl = string.Empty;
+
+                string wdh = string.Empty; string wdl = string.Empty; //温度
+                string daywthr = string.Empty; string nightwthr = string.Empty;  //天气
+                string sunrise = string.Empty; string sunset = string.Empty;  //日出 日落
+
                 foreach (KeyValuePair<string, object> item in weater2)
                 {
                     if (item.Key.Equals("date"))
                     {
-                        sb.Append($"日期：{mouth}月{item.Value}\r\n");
+                        sb.Append($"日期：{item.Value}\r\n");
                     }
                     if (item.Key.Equals("high"))
                     {
@@ -97,24 +102,55 @@ namespace MC_Weather
                     }
                     if (!string.IsNullOrEmpty(wdl) && !string.IsNullOrEmpty(wdh))
                     {
-                        sb.Append(wdl + "-" + wdh + "\r\n");
+                        sb.Append("温度："+ wdl + "-" + wdh + "℃\r\n");
                         wdh = string.Empty;
                         wdl = string.Empty;
                     }
-                    if (item.Key.Equals("fengli"))
+                    if (item.Key.Equals("day"))
+                    {
+                         Dictionary<string, object> wthr = item.Value as Dictionary<string, object>;
+                         daywthr = wthr["wthr"].ToString();
+                    }
+                    if (item.Key.Equals("night"))
+                    {
+                        Dictionary<string, object> wthr = item.Value as Dictionary<string, object>;
+                        nightwthr = wthr["wthr"].ToString();
+                    }
+                    if (!string.IsNullOrEmpty(daywthr) && !string.IsNullOrEmpty(nightwthr))
+                    {
+                        sb.Append("天气：" + daywthr + "转" + nightwthr + "\r\n");
+                        daywthr = string.Empty;
+                        nightwthr = string.Empty;
+                    }
+                    if (item.Key.Equals("wp"))
                     {
                         //fengli=<![CDATA[4级]]>
                         sb.Append($"风力：{item.Value.ToString().Replace("<![CDATA[", "").Replace("]]>", "")}\r\n");
                     }
-                    if (item.Key.Equals("fengxiang"))
+                    if (item.Key.Equals("wd"))
                     {
                         sb.Append($"风向：{item.Value}\r\n");
                     }
-                    if (item.Key.Equals("type"))
+                    if (item.Key.Equals("sunrise"))
                     {
-                        sb.Append($"天气：{item.Value}\r\n");
+                        sunrise = $"{item.Value}";
                     }
+                    if (item.Key.Equals("sunset"))
+                    {
+                        sunset = $"{item.Value}";
+                    }
+                    if (!string.IsNullOrEmpty(sunrise) && !string.IsNullOrEmpty(sunset))
+                    {
+                        sb.Append($"日出：{sunrise}\r\n日落：{sunset}\r\n");
+                        sunrise = string.Empty;
+                        sunset = string.Empty;
+                    }
+                    //if (item.Key.Equals("type"))
+                    //{
+                    //    sb.Append($"天气：{item.Value}\r\n");
+                    //}
                 }
+
                 if (i < arrayList.Count-1)
                 {
                     sb.Append("----------------\r\n");
