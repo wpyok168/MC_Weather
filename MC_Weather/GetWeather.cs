@@ -77,7 +77,8 @@ namespace MC_Weather
             sb.Append($"城市：{city}\r\n");
             sb.Append("----------------\r\n");
             //string mouth = DateTime.Now.ToString("MM");
-            for (int i = 0; i < arrayList.Count; i++)
+
+            for (int i = 1; i < arrayList.Count; i++)
             {
                 Dictionary<string, object> weater2 = (Dictionary<string, object>)arrayList[i];
 
@@ -122,15 +123,16 @@ namespace MC_Weather
                         daywthr = string.Empty;
                         nightwthr = string.Empty;
                     }
+                    if (item.Key.Equals("wd"))
+                    {
+                        sb.Append($"风向：{item.Value}\r\n");
+                    }
                     if (item.Key.Equals("wp"))
                     {
                         //fengli=<![CDATA[4级]]>
                         sb.Append($"风力：{item.Value.ToString().Replace("<![CDATA[", "").Replace("]]>", "")}\r\n");
                     }
-                    if (item.Key.Equals("wd"))
-                    {
-                        sb.Append($"风向：{item.Value}\r\n");
-                    }
+                    
                     if (item.Key.Equals("sunrise"))
                     {
                         sunrise = $"{item.Value}";
