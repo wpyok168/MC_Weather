@@ -13,7 +13,7 @@ namespace DebugWeather
         {
             GetWeather weather = new GetWeather();
             string str1 = weather.Getweather("思明");
-            string str2 = weather.GetWeather1("思明");
+            string str2 = weather.GetWeather1("官桥");
         }
     }
 }

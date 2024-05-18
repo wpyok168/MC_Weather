@@ -21,13 +21,15 @@ namespace MC_Weather
         {
             string outstr = string.Empty;
             string jsonstr = GetWeatherprivateM(city);
-            if (!jsonstr.Contains("invilad-citykey"))
+            bool b = jsonstr.Contains("invalid-citykey");
+            if (jsonstr.Contains("invilad-citykey") || jsonstr.Contains("invalid-citykey"))
             {
-                outstr = JsonParst(jsonstr);
+                outstr = "未找到对应城市"; //无效城市
             }
             else
             {
-                outstr = "无效城市";
+                outstr = JsonParst(jsonstr);
+               
             }
             return outstr;
         }

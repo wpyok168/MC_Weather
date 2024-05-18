@@ -21,7 +21,12 @@ namespace MC_Weather
             if (e.Msg.Contains("天气") && e.Msg.Length > "天气".Length)
             {
                 GetWeather weather = new GetWeather();
-                Common.MC_API.SendGroupMsg_(e.FromGroup, weather.Getweather(e.Msg.Replace("天气", "")));
+                string temp = weather.Getweather(e.Msg.Replace("天气", ""));
+                Common.MC_API.SendGroupMsg_(e.FromGroup, temp);
+                if (temp.Contains("无效城市") || temp.Contains("未找到对应城市"))
+                {
+                    return (int)EventProcessEnum.消息处理_忽略;
+                }
                 Common.MC_API.SendGroupMsg_(e.FromGroup, weather.GetWeather1(e.Msg.Replace("天气", "")));
             }
             return (int)EventProcessEnum.消息处理_忽略;
