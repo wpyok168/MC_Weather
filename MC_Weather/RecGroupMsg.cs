@@ -22,6 +22,7 @@ namespace MC_Weather
             {
                 GetWeather weather = new GetWeather();
                 Common.MC_API.SendGroupMsg_(e.FromGroup, weather.Getweather(e.Msg.Replace("天气", "")));
+                Common.MC_API.SendGroupMsg_(e.FromGroup, weather.GetWeather1(e.Msg.Replace("天气", "")));
             }
             return (int)EventProcessEnum.消息处理_忽略;
         }

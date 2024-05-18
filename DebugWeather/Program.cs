@@ -12,7 +12,8 @@ namespace DebugWeather
         static void Main(string[] args)
         {
             GetWeather weather = new GetWeather();
-            weather.Getweather("思明");
+            string str1 = weather.Getweather("思明");
+            string str2 = weather.GetWeather1("思明");
         }
     }
 }
