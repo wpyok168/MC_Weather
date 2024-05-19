@@ -53,6 +53,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="GetWeatherZNAPI.cs" />
     <Compile Include="RecGroupMsg.cs" />
     <Compile Include="RecPrivateMsg.cs" />
     <Compile Include="GetWeather.cs" />
@@ -65,6 +66,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="CityDataMobile.json" />
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

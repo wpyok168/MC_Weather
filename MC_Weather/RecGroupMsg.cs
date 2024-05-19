@@ -20,6 +20,8 @@ namespace MC_Weather
             }
             if (e.Msg.Contains("天气") && e.Msg.Length > "天气".Length)
             {
+                /**
+                //中华万年历天气接口
                 GetWeather weather = new GetWeather();
                 string temp = weather.Getweather(e.Msg.Replace("天气", ""));
                 Common.MC_API.SendGroupMsg_(e.FromGroup, temp);
@@ -27,7 +29,14 @@ namespace MC_Weather
                 {
                     return (int)EventProcessEnum.消息处理_忽略;
                 }
+                //中国天气网 爬虫
                 Common.MC_API.SendGroupMsg_(e.FromGroup, weather.GetWeather1(e.Msg.Replace("天气", "")));
+                 **/
+
+                //中国天气网 移动网络API
+                GetWeatherZNAPI getWeatherZNAPI = new GetWeatherZNAPI();
+                //string str3 = getWeatherZNAPI.GetCityWeatherAPI(e.Msg.Replace("天气", ""));
+                Common.MC_API.SendGroupMsg_(e.FromGroup, getWeatherZNAPI.GetCityWeatherAPI(e.Msg.Replace("天气", "")));
             }
             return (int)EventProcessEnum.消息处理_忽略;
         }
