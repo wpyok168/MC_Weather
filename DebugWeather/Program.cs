@@ -15,7 +15,7 @@ namespace DebugWeather
             //string str1 = weather.Getweather("思明");
             //string str2 = weather.GetWeather1("官桥");
             GetWeatherZNAPI getWeatherZNAPI = new GetWeatherZNAPI();
-            string str3 = getWeatherZNAPI.GetCityWeatherAPI("思明");
+            string str3 = getWeatherZNAPI.GetCityWeatherAPI("广西科技馆");
         }
     }
 }

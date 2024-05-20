@@ -235,11 +235,14 @@ namespace MC_Weather
                         }
                         if (item.QuerySelector("p.win") != null)
                         {
-                            if (item.QuerySelector("p.win").QuerySelector("em") != null)
+                            if (item.QuerySelector("p.win").QuerySelector("em").QuerySelectorAll("span").Count > 1)
                             {
                                 tQ.NNW = item.QuerySelector("p.win").QuerySelector("em").QuerySelectorAll("span")[0].GetAttributeValue("title", "") + "转" + item.QuerySelector("p.win").QuerySelector("em").QuerySelectorAll("span")[1].GetAttributeValue("title", "");
                             }
-
+                            else
+                            {
+                                tQ.NNW = item.QuerySelector("p.win").QuerySelector("em").QuerySelectorAll("span")[0].GetAttributeValue("title", "");
+                            }
                         }
                         if (item.QuerySelector(".win") != null)
                         {
