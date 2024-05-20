@@ -209,6 +209,11 @@ namespace MC_Weather
             doc.LoadHtml(html); //  The document contains <i><3级</i> tags
             HtmlNodeCollection nodes = doc.DocumentNode.SelectNodes("//*[@id=\"7d\"]/ul"); // 有问题：丢失风力 ＜3级  Missing <i><3级</i> tags after SelectNodes
                                                                                            //CSS选择器需要再nuget: HtmlAgilityPack.CssSelectors
+            if (nodes == null)
+            {
+                return null;
+            }
+
             HtmlNode hnode = doc.DocumentNode.QuerySelector(".t.clearfix");  // 有问题：丢失风力 ＜3级
             HtmlNode hnode1 = doc.DocumentNode.QuerySelector(".c7d");
            
@@ -262,7 +267,12 @@ namespace MC_Weather
         /// <returns></returns>
         public string GetWeather1(string cityname)
         {
-            return ListToSB(GetWeather2(cityname), cityname);
+            List<TQ> list = GetWeather2(cityname);
+            if (list == null)
+            {
+                return "未找到对应城市";
+            }
+            return ListToSB(list, cityname);
 
         }
         private string ListToSB(List<TQ> list, string city)

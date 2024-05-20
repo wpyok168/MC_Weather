@@ -11,11 +11,11 @@ namespace DebugWeather
     {
         static void Main(string[] args)
         {
-            //GetWeather weather = new GetWeather();
+            GetWeather weather = new GetWeather();
             //string str1 = weather.Getweather("思明");
-            //string str2 = weather.GetWeather1("官桥");
-            GetWeatherZNAPI getWeatherZNAPI = new GetWeatherZNAPI();
-            string str3 = getWeatherZNAPI.GetCityWeatherAPI("广西科技馆");
+            string str2 = weather.GetWeather1("官桥");//广西科技馆  官桥
+            //GetWeatherZNAPI getWeatherZNAPI = new GetWeatherZNAPI();
+            //string str3 = getWeatherZNAPI.GetCityWeatherAPI("广西科技馆");
         }
     }
 }
